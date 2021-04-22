@@ -6,15 +6,19 @@ namespace MoodAnalyzer
 {
     public class MoodAnalyser
     {
-        private string message;
+        readonly string message;
 
         /// <summary>
-        /// Take the mood message in constructor
+        /// Take mood message in constructor
         /// </summary>
         public MoodAnalyser()
         {
         }
 
+        /// <summary>
+        /// Parameterised constructor
+        /// </summary>
+        /// <param name="message"></param>
         public MoodAnalyser(string message)
         {
             this.message = message;
@@ -27,13 +31,20 @@ namespace MoodAnalyzer
         /// <returns></returns>
         public string AnalyzeMood(string message)
         {
-            if (this.message.Contains("I am in sad mood"))
+            try
             {
-                return "SAD";
+                if (message.Contains("I am in sad mood"))
+                {
+                    return "SAD";
+                }
+                else
+                {
+                    return "HAPPY";
+                }
             }
-            else
+            catch (MoodAnalyzerException)
             {
-                return "HAPPY";
+                throw new MoodAnalyzerException("HAPPY");
             }
         }
         public string AnalyzeMood()
