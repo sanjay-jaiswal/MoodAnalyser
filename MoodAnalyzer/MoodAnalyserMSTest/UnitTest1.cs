@@ -184,7 +184,7 @@ namespace MoodAnalyserMSTest
             [TestMethod]
             public void GivenHappyMessage_UsingReflection_IfCorrect_Should_ReturnHappy()
             {
-                string message = MoodAnalyserFactory.InvokeMethod("MoodAnalyzer.MoodAnalyser", "GetMood", "HAPPY");
+                string message = MoodAnalyserFactory.InvokeTheMethod("MoodAnalyzer.MoodAnalyser", "GetMood", "HAPPY");
                 Assert.AreEqual("HAPPY", message);
             }
 
@@ -198,12 +198,56 @@ namespace MoodAnalyserMSTest
             {
                 try
                 {
-                    string message = MoodAnalyserFactory.InvokeMethod("MoodAnalyzer.MoodAnalyser", "getMethod", "HAPPY");
+                    string message = MoodAnalyserFactory.InvokeTheMethod("MoodAnalyzer.MoodAnalyser", "getMethod", "HAPPY");
                 }
                 catch (MoodAnalyzerException e)
                 {
                     Assert.AreEqual(MoodAnalyzerException.ExceptionType.INVALID_INPUT, e.Message);
                 }
             }
+
+        /// <summary>
+        /// Test Case 7.1
+        /// set Happy message with Reflector 
+        /// should return HAPPY
+        /// </summary>
+        [TestMethod]
+        public void ChangeMoodDynamically_WhenHappyMessage_ShouldReturnHappy()
+        {
+            dynamic result = MoodAnalyserFactory.ChangeMoodDynamically("MoodAnalyser.MoodAnalyserMain", "HAPPY");
+            Assert.AreEqual("HAPPY", result);
+        }
+
+        /// <summary>
+        /// Test Case 7.2 set field when improper should throw Exception 
+        /// </summary>
+        [TestMethod]
+        public void ChangeMoodDynamically_WhenImproperMessage_ShouldThrowException()
+        {
+            try
+            {
+                string message = MoodAnalyserFactory.ChangeMoodDynamically("MoodAnalyzer.getMood", "HAPPY");
+            }
+            catch (MoodAnalyzerException e)
+            {
+                Assert.AreEqual(MoodAnalyzerException.ExceptionType.INVALID_INPUT, e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Test Case 7.3 setting Null message with Reflector should throw Exception
+        /// </summary>
+        [TestMethod]
+        public void ChangeMoodDynamically_WhenNull_ShouldThrowException()
+        {
+            try
+            {
+                dynamic result = MoodAnalyserFactory.ChangeMoodDynamically("MoodAnalyzer.MoodAnalyser", null);
+            }
+            catch (MoodAnalyzerException e)
+            {
+                Assert.AreEqual(MoodAnalyzerException.ExceptionType.NULL_EXCEPTION, e.Message);
+            }
+        }
     }
 }

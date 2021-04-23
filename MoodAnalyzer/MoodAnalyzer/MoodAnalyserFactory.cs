@@ -69,7 +69,7 @@ namespace MoodAnalyzer
         /// <param name="methodName"></param>
         /// <param name="message"></param>
         /// <returns></returns>
-        public static string InvokeMethod(string className, string methodName, string message)
+        public static string InvokeTheMethod(string className, string methodName, string message)
         {
             Type type1 = typeof(MoodAnalyser);
             try
@@ -85,6 +85,28 @@ namespace MoodAnalyzer
             catch (Exception)
             {
                 throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.INVALID_INPUT, "No Such Method");
+            }
+        }
+
+        /// <summary>
+        /// UC7 Use Reflection to change mood dynamically
+        /// </summary>
+        /// <param name="className"></param>
+        /// <param name="mood"></param>
+        /// <returns></returns>
+        public static dynamic ChangeMoodDynamically(string className, string mood)
+        {
+            try
+            {
+                Type type = Type.GetType(className);
+                dynamic change_mood = Activator.CreateInstance(type, mood);
+                MethodInfo method = type.GetMethod("GetMood");
+                dynamic value = method.Invoke(change_mood, new object[] { mood });
+                return value;
+            }
+            catch (Exception e)
+            {
+                throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.NULL_EXCEPTION, e.Message);
             }
         }
     }
