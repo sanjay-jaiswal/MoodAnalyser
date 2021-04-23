@@ -12,11 +12,11 @@ namespace MoodAnalyserMSTest
             [TestMethod]
             public void GivenSadMood_ShouldReturnSAD()
             {
-                //Arrange
-                MoodAnalyser moodAnalyser = new MoodAnalyser("I am in sad mood");
-                //Act
+            //Arrange
+            MoodAnalyser moodAnalyser = new MoodAnalyser("I am in sad mood");
+            //Act
 
-                string mood = moodAnalyser.AnalyzeMood();
+            string mood = moodAnalyser.AnalyzeMood();
                 //Assert
                 Assert.AreEqual("SAD", mood);
             }
@@ -28,20 +28,20 @@ namespace MoodAnalyserMSTest
             public void GivenAnyMood_ShouldReturnHAPPY()
             {
                 //Arrange
-                MoodAnalyser moodAnalyserMain = new MoodAnalyser("I am in any mood");
+                MoodAnalyser moodAnalyser = new MoodAnalyser("I am in any mood");
                 //Act
-                string mood = moodAnalyserMain.AnalyzeMood();
+                string mood = moodAnalyser.AnalyzeMood();
                 //Assert
                 Assert.AreEqual("HAPPY", mood);
             }
 
             [TestMethod]
-            public void GivenMood_WhenSadMessageConstructor_ShouldReturnSAD()
+            public void GivenMood_IfSadMessageAre_PassingToConstructor_ShouldReturn_SAD()
             {
                //Arrange
-               MoodAnalyser moodAnalyserMain = new MoodAnalyser();
+               MoodAnalyser moodAnalyser = new MoodAnalyser();
                //Act
-               string mood = moodAnalyserMain.AnalyzeMood("I am in sad mood");
+               string mood = moodAnalyser.AnalyzeMood("I am in sad mood");
                //Assert
                Assert.AreEqual("SAD", mood);
             }
@@ -50,7 +50,7 @@ namespace MoodAnalyserMSTest
             /// Test for HAPPY  Message constructor
             /// </summary>
             [TestMethod]
-            public void GivenMood_WhenAnyMessageConstructor_ShouldReturnHAPPY()
+            public void GivenMood_IfAnyMessagePassing_ToConstructor_ShouldReturn_HAPPY()
             {
                 //Arrange
                 MoodAnalyser moodAnalyserMain = new MoodAnalyser();
@@ -60,11 +60,8 @@ namespace MoodAnalyserMSTest
                 Assert.AreEqual("HAPPY", mood);
             }
 
-            /// <summary>
-            /// Test case for handle null exception
-            /// </summary>
             [TestMethod]
-            public void GivenNullMessage_ShouldReturnHappy()
+            public void GivenMood_IfNull_ShouldReturn_Happy()
             {
                 //Arrange
                 MoodAnalyser moodAnalyserMain = new MoodAnalyser();
@@ -72,6 +69,34 @@ namespace MoodAnalyserMSTest
                 string mood = moodAnalyserMain.AnalyzeMood("NULL");
                 //Assert
                 Assert.AreEqual("HAPPY", mood);
+            }
+
+            [TestMethod]
+            public void GivenMood_IfNull_ShouldThrowException()
+            {
+                try
+                {
+                    MoodAnalyser moodAnalyser = new MoodAnalyser();
+                    string mood = moodAnalyser.AnalyzeMood("NULL");
+                }
+                catch (MoodAnalyzerException e)
+                {
+                    Assert.AreEqual("Mood should not be NULL", e.Message);
+                }
+            }
+
+            [TestMethod]
+            public void GivenMood_IfEmpty_ShouldThrowException()
+            {
+                try
+                {
+                    MoodAnalyser moodAnalyser = new MoodAnalyser();
+                    string mood = moodAnalyser.AnalyzeMood(" ");
+                }
+                catch (MoodAnalyzerException e)
+                {
+                    Assert.AreEqual("Mood should not be EMPTY", e.Message);
+                }
             }
     }
 }
