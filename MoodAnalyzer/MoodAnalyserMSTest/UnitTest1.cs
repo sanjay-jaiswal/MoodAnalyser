@@ -98,5 +98,41 @@ namespace MoodAnalyserMSTest
                     Assert.AreEqual("Mood should not be EMPTY", e.Message);
                 }
             }
+
+            [TestMethod]
+            public void Given_MoodAnalyser_ClassName_ShouldReturn_MoodAnalyseObject()
+            {
+                object expected = new MoodAnalyser("NULL");
+                object obj = MoodAnalyserFactory.CreateMoodAnalyseMethod("MoodAnalyzer.MoodAnalyser", "MoodAnalyser");
+                expected.Equals(obj);
+            }
+
+            [TestMethod]
+            public void GivenInvalidClassName_ShouldThrow_MoodAnalyserException()
+            {
+                string expected = "Class not Found";
+                try
+                {
+                    object obj = MoodAnalyserFactory.CreateMoodAnalyseMethod ("MoodAnalyser.sampleClass", "MoodAnalyser");
+                }
+                catch (MoodAnalyzerException e)
+                {
+                    Assert.AreEqual(expected, e.Message);
+                }
+            }
+
+            [TestMethod]
+            public void GivenClass_WhenNotProper_Constructor_ShouldThrow_MoodAnalyserException()
+            {
+                string expected = "Constructor is not Found";
+                try
+                {
+                    object obj = MoodAnalyserFactory.CreateMoodAnalyseMethod("MoodAnalyzer.MoodAnalyser", "sampleClass");
+                }
+                catch (MoodAnalyzerException e)
+                {
+                    Assert.AreEqual(expected, e.Message);
+                }
+            }   
     }
 }

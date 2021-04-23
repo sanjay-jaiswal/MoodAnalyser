@@ -12,7 +12,9 @@ namespace MoodAnalyzer
             EMPTY_EXCEPTION, 
             NO_SUCH_METHOD_PRESENT,
             NO_SUCH_FIELD_PRESENT,
-            INVALID_INPUT
+            INVALID_INPUT,
+            NO_SUCH_CLASS,
+            NO_SUCH_METHOD
         }
         ExceptionType type;
         readonly string message;
