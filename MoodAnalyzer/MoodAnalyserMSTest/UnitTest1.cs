@@ -135,7 +135,7 @@ namespace MoodAnalyserMSTest
                 }
             }
 
-        //////////////////
+        
             [TestMethod]
             public void GivenMoodAnalyser_WhenCorrect_Return_MoodAnalyseObject()
             {
@@ -159,7 +159,7 @@ namespace MoodAnalyserMSTest
             }
 
             // <summary>
-            /// This test case is for
+            /// This test case is for Invalid
             /// TC 5.3 Given Invalid constructor name should throw MoodAnalyserException.
             /// </summary>
             [TestMethod]
@@ -173,6 +173,36 @@ namespace MoodAnalyserMSTest
                 catch (MoodAnalyzerException e)
                 {
                     Assert.AreEqual(expected, e.Message);
+                }
+            }
+
+            /// <summary>
+            /// Test Case 6.1 
+            /// Happy message passing using Reflection when correct
+            /// should return HAPPY Mood
+            /// </summary>
+            [TestMethod]
+            public void GivenHappyMessage_UsingReflection_IfCorrect_Should_ReturnHappy()
+            {
+                string message = MoodAnalyserFactory.InvokeMethod("MoodAnalyzer.MoodAnalyser", "GetMood", "HAPPY");
+                Assert.AreEqual("HAPPY", message);
+            }
+
+            /// <summary>
+            /// Test Case 6.2 
+            /// Given Happy message when incorrect method 
+            /// should throw MoodAnalyserException
+            /// </summary>
+            [TestMethod]
+            public void GivenHappyMessage_UsingReflection_WhenIncorrectMethod_shouldThrow_MoodAnayserException()
+            {
+                try
+                {
+                    string message = MoodAnalyserFactory.InvokeMethod("MoodAnalyzer.MoodAnalyser", "getMethod", "HAPPY");
+                }
+                catch (MoodAnalyzerException e)
+                {
+                    Assert.AreEqual(MoodAnalyzerException.ExceptionType.INVALID_INPUT, e.Message);
                 }
             }
     }
